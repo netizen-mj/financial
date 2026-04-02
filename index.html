@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northstar Money</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-mark">N</div>
+          <div>
+            <p class="eyebrow">Personal finance</p>
+            <h1>Northstar</h1>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active">Overview</button>
+          <button class="nav-item">Subscriptions</button>
+          <button class="nav-item">Budgets</button>
+          <button class="nav-item">Transactions</button>
+          <button class="nav-item">Goals</button>
+        </nav>
+
+        <section class="sidebar-card">
+          <p class="card-label">This month</p>
+          <h2 id="saved-total">$0</h2>
+          <p class="muted">Auto-detected savings from reduced recurring bills.</p>
+          <div class="meter">
+            <span id="savings-progress"></span>
+          </div>
+        </section>
+
+        <section class="sidebar-card highlight">
+          <p class="card-label">Next move</p>
+          <h3>Trim recurring spend</h3>
+          <p class="muted">Three subscriptions are underused and worth reviewing this week.</p>
+          <button class="ghost-button">Review subscriptions</button>
+        </section>
+      </aside>
+
+      <main class="dashboard">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Good evening, Maitreyee</p>
+            <h2>Your money is moving in the right direction.</h2>
+            <p class="hero-copy">
+              One place to track cash flow, spot subscription creep, and keep your
+              monthly plan on course.
+            </p>
+          </div>
+          <div class="hero-actions">
+            <button class="secondary-button">Export report</button>
+            <button class="primary-button">Connect account</button>
+          </div>
+        </header>
+
+        <section class="hero-grid">
+          <article class="panel balance-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="card-label">Linked cash balance</p>
+                <h3 id="cash-balance">$0</h3>
+              </div>
+              <span class="trend-pill positive" id="balance-change">+0%</span>
+            </div>
+            <div class="sparkline" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </article>
+
+          <article class="panel">
+            <p class="card-label">Monthly spend</p>
+            <h3 id="monthly-spend">$0</h3>
+            <p class="muted">Compared with last month.</p>
+            <div class="big-number-row">
+              <span class="trend-pill negative" id="spend-change">+0%</span>
+              <span class="subtle-stat" id="needs-ratio">Needs 0%</span>
+            </div>
+          </article>
+
+          <article class="panel">
+            <p class="card-label">Upcoming bills</p>
+            <h3 id="upcoming-bills">$0</h3>
+            <p class="muted">Due in the next 10 days.</p>
+            <div class="bill-stack" id="upcoming-list"></div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel large-panel">
+            <div class="section-heading">
+              <div>
+                <p class="card-label">Spending plan</p>
+                <h3>Budget health</h3>
+              </div>
+              <span class="section-tag">Live</span>
+            </div>
+            <div class="budget-list" id="budget-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="card-label">Recurring charges</p>
+                <h3>Subscriptions</h3>
+              </div>
+              <button class="text-button">Manage</button>
+            </div>
+            <div class="subscription-list" id="subscription-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="section-heading">
+              <div>
+                <p class="card-label">Savings goal</p>
+                <h3>Emergency fund</h3>
+              </div>
+              <span class="section-tag neutral">4 months left</span>
+            </div>
+            <div class="goal-ring">
+              <div class="goal-ring-inner">
+                <strong id="goal-progress">0%</strong>
+                <span>funded</span>
+              </div>
+            </div>
+            <p class="muted">
+              You are on pace to reach your target by August if current contributions
+              hold steady.
+            </p>
+          </article>
+
+          <article class="panel wide-panel">
+            <div class="section-heading">
+              <div>
+                <p class="card-label">Latest activity</p>
+                <h3>Transactions</h3>
+              </div>
+              <button class="text-button">View all</button>
+            </div>
+            <div class="transaction-list" id="transaction-list"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
