@@ -205,16 +205,18 @@ function renderOverview() {
 function renderUpcomingBills() {
   const list = document.getElementById("upcoming-list");
   list.innerHTML = "";
+  const totalRecurring = financialSnapshot.recurringBills.reduce((sum, bill) => sum + bill.amount, 0);
 
   financialSnapshot.upcomingBills.forEach((bill) => {
     const matchingBill = financialSnapshot.recurringBills.find((item) => item.name === bill.name);
+    const ratio = matchingBill && totalRecurring > 0 ? Math.round((matchingBill.amount / totalRecurring) * 100) : 0;
     const item = document.createElement("div");
     item.className = "bill-item";
     item.innerHTML = `
       <div class="transaction-row">
         <div class="transaction-meta">
           <strong>${bill.name}</strong>
-          <span class="muted">Due ${bill.due}</span>
+          <span class="muted">Due ${bill.due} • ${ratio}% of recurring</span>
         </div>
         <strong>${matchingBill ? currencyPrecise.format(matchingBill.amount) : "Tracked"}</strong>
       </div>
@@ -251,14 +253,17 @@ function renderSubscriptions() {
   list.innerHTML = "";
   detailedList.innerHTML = "";
   const totalMonthly = financialSnapshot.recurringBills.reduce((sum, bill) => sum + bill.amount, 0);
+  const income = financialSnapshot.monthlyIncome;
 
   financialSnapshot.recurringBills.forEach((subscription) => {
+    const ratio = totalMonthly > 0 ? Math.round((subscription.amount / totalMonthly) * 100) : 0;
+    const incomeRatio = income > 0 ? Math.round((subscription.amount / income) * 100) : 0;
     const row = document.createElement("div");
     row.className = "subscription-row";
     row.innerHTML = `
       <div class="subscription-meta">
         <strong>${subscription.name}</strong>
-        <span class="muted">${subscription.cadence}</span>
+        <span class="muted">${subscription.cadence} • ${ratio}% of recurring • ${incomeRatio}% of income</span>
       </div>
       <div class="subscription-meta" style="text-align: right">
         <strong>${currencyPrecise.format(subscription.amount)}</strong>
@@ -427,6 +432,7 @@ function renderCalendar() {
 }
 
 function setupEditor() {
+  const appFrame = document.querySelector(".app-frame");
   const editorPanel = document.getElementById("editor-panel");
   const openButtons = [
     document.getElementById("open-editor-desktop"),
@@ -466,10 +472,12 @@ function setupEditor() {
   function openEditor() {
     fillForm();
     editorPanel.classList.remove("hidden");
+    appFrame.classList.add("editor-open");
   }
 
   function closeEditor() {
     editorPanel.classList.add("hidden");
+    appFrame.classList.remove("editor-open");
   }
 
   openButtons.forEach((button) => {
