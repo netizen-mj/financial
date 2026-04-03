@@ -1,20 +1,20 @@
 :root {
-  color-scheme: light;
-  --bg: #fff5eb;
-  --bg-accent: #ffe1d1;
-  --surface: rgba(255, 252, 248, 0.92);
-  --surface-strong: #fffdf9;
-  --surface-dark: #20162a;
-  --text: #251b2d;
-  --muted: #74687e;
-  --line: rgba(37, 27, 45, 0.09);
-  --brand: #ff6b6b;
-  --brand-deep: #ff8e53;
-  --accent-two: #ffd166;
-  --accent-three: #6dd3ce;
-  --warn: #ff8a5b;
-  --danger: #d94f70;
-  --shadow: 0 28px 90px rgba(68, 32, 74, 0.14);
+  color-scheme: dark;
+  --bg: #000000;
+  --bg-accent: #070905;
+  --surface: rgba(22, 29, 18, 0.92);
+  --surface-strong: #1b2415;
+  --surface-dark: #080b06;
+  --text: #edf5d7;
+  --muted: #9daa84;
+  --line: rgba(214, 244, 123, 0.12);
+  --brand: #d6f47b;
+  --brand-deep: #93d54e;
+  --accent-two: #f2d94e;
+  --accent-three: #b5ff6d;
+  --warn: #f2d94e;
+  --danger: #ff875e;
+  --shadow: 0 28px 90px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -27,10 +27,10 @@ body {
   font-family: "Manrope", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(255, 107, 107, 0.22), transparent 24%),
-    radial-gradient(circle at top right, rgba(109, 211, 206, 0.22), transparent 24%),
-    radial-gradient(circle at bottom center, rgba(255, 209, 102, 0.2), transparent 28%),
-    linear-gradient(180deg, #fff7f0 0%, var(--bg) 52%, #ffeede 100%);
+    radial-gradient(circle at top left, rgba(214, 244, 123, 0.12), transparent 22%),
+    radial-gradient(circle at top right, rgba(242, 217, 78, 0.1), transparent 22%),
+    radial-gradient(circle at bottom center, rgba(181, 255, 109, 0.06), transparent 28%),
+    linear-gradient(180deg, #020302 0%, var(--bg) 50%, #000000 100%);
 }
 
 button {
@@ -55,9 +55,9 @@ button {
   gap: 20px;
   padding: 22px;
   border-radius: 40px;
-  background: linear-gradient(180deg, rgba(255, 247, 240, 0.92), rgba(255, 238, 222, 0.88));
-  border: 1px solid rgba(20, 49, 43, 0.08);
-  box-shadow: 0 36px 120px rgba(19, 49, 43, 0.16);
+  background: linear-gradient(180deg, rgba(16, 21, 12, 0.96), rgba(10, 13, 8, 0.96));
+  border: 1px solid rgba(214, 244, 123, 0.08);
+  box-shadow: 0 36px 120px rgba(0, 0, 0, 0.42);
 }
 
 .auth-copy,
@@ -65,7 +65,7 @@ button {
   border-radius: 28px;
   background: var(--surface);
   box-shadow: var(--shadow);
-  border: 1px solid rgba(20, 49, 43, 0.08);
+  border: 1px solid rgba(214, 244, 123, 0.08);
 }
 
 .auth-copy {
@@ -98,17 +98,17 @@ button {
 
 .auth-field input {
   width: 100%;
-  border: 1px solid rgba(20, 49, 43, 0.12);
+  border: 1px solid rgba(214, 244, 123, 0.12);
   border-radius: 16px;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(8, 11, 6, 0.92);
   color: var(--text);
   font: inherit;
 }
 
 .auth-field input:focus {
-  outline: 2px solid rgba(255, 107, 107, 0.18);
-  border-color: rgba(255, 107, 107, 0.45);
+  outline: 2px solid rgba(214, 244, 123, 0.18);
+  border-color: rgba(214, 244, 123, 0.45);
 }
 
 .auth-submit {
@@ -137,10 +137,10 @@ button {
   margin: 0 auto;
   border-radius: 36px;
   overflow: hidden;
-  border: 1px solid rgba(37, 27, 45, 0.08);
+  border: 1px solid rgba(214, 244, 123, 0.08);
   background:
-    linear-gradient(180deg, rgba(255, 251, 247, 0.98), rgba(255, 241, 231, 0.98));
-  box-shadow: 0 36px 120px rgba(31, 22, 40, 0.14);
+    linear-gradient(180deg, rgba(18, 24, 14, 0.98), rgba(10, 13, 8, 0.98));
+  box-shadow: 0 36px 120px rgba(0, 0, 0, 0.32);
   position: relative;
 }
 
@@ -157,14 +157,14 @@ button {
   padding: 28px 22px;
   border-right: 1px solid var(--line);
   background:
-    linear-gradient(180deg, rgba(255, 246, 238, 0.9), rgba(255, 236, 226, 0.92));
+    linear-gradient(180deg, rgba(21, 28, 17, 0.95), rgba(12, 16, 10, 0.96));
   backdrop-filter: blur(18px);
 }
 
 .editor-panel {
   padding: 28px 22px;
   border-right: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(255, 252, 248, 0.92), rgba(255, 239, 230, 0.92));
+  background: linear-gradient(180deg, rgba(21, 28, 17, 0.95), rgba(12, 16, 10, 0.96));
   overflow: auto;
 }
 
@@ -215,11 +215,11 @@ button {
   display: grid;
   place-items: center;
   background: linear-gradient(135deg, var(--brand), var(--brand-deep));
-  color: white;
+  color: #10150d;
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
-  box-shadow: 0 16px 40px rgba(13, 139, 111, 0.24);
+  box-shadow: 0 16px 40px rgba(214, 244, 123, 0.18);
 }
 
 .eyebrow,
@@ -259,12 +259,12 @@ button {
 .nav-item.active,
 .nav-item:hover {
   background: var(--surface-strong);
-  box-shadow: inset 0 0 0 1px rgba(13, 139, 111, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(214, 244, 123, 0.18);
 }
 
 .sidebar-card,
 .panel {
-  border: 1px solid rgba(20, 49, 43, 0.08);
+  border: 1px solid rgba(214, 244, 123, 0.08);
   border-radius: 28px;
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -276,7 +276,7 @@ button {
 }
 
 .sidebar-card.highlight {
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(109, 211, 206, 0.18));
+  background: linear-gradient(135deg, rgba(214, 244, 123, 0.12), rgba(242, 217, 78, 0.14));
 }
 
 .muted {
@@ -289,7 +289,7 @@ button {
   width: 100%;
   height: 10px;
   border-radius: 999px;
-  background: rgba(13, 139, 111, 0.12);
+  background: rgba(214, 244, 123, 0.1);
   overflow: hidden;
 }
 
@@ -313,16 +313,16 @@ button {
 .secondary-button {
   padding: 12px 14px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
 }
 
 .primary-button {
   padding: 12px 16px;
   border-radius: 14px;
-  color: white;
+  color: #10150d;
   background: linear-gradient(135deg, var(--brand), var(--brand-deep));
-  box-shadow: 0 18px 40px rgba(255, 107, 107, 0.28);
+  box-shadow: 0 18px 40px rgba(214, 244, 123, 0.18);
 }
 
 .text-button {
@@ -351,17 +351,17 @@ button {
   height: 42px;
   border: 0;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--accent-three), #57b8ff);
-  color: #fff;
+  background: linear-gradient(135deg, var(--accent-three), var(--accent-two));
+  color: #10150d;
   font-weight: 800;
-  box-shadow: 0 16px 36px rgba(13, 139, 111, 0.22);
+  box-shadow: 0 16px 36px rgba(214, 244, 123, 0.14);
 }
 
 .icon-chip {
   border: 0;
   border-radius: 14px;
   padding: 0 14px;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   font-weight: 700;
 }
@@ -459,12 +459,12 @@ button {
 
 .trend-pill.positive,
 .section-tag {
-  background: rgba(109, 211, 206, 0.18);
-  color: #167a73;
+  background: rgba(181, 255, 109, 0.12);
+  color: var(--accent-three);
 }
 
 .trend-pill.negative {
-  background: rgba(255, 107, 107, 0.14);
+  background: rgba(242, 217, 78, 0.12);
   color: var(--warn);
 }
 
@@ -477,7 +477,7 @@ button {
 }
 
 .section-tag.neutral {
-  background: rgba(20, 49, 43, 0.08);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .sparkline {
@@ -492,7 +492,7 @@ button {
 .sparkline span {
   display: block;
   border-radius: 999px 999px 10px 10px;
-  background: linear-gradient(180deg, rgba(255, 107, 107, 0.26), rgba(255, 142, 83, 0.9));
+  background: linear-gradient(180deg, rgba(214, 244, 123, 0.24), rgba(147, 213, 78, 0.9));
 }
 
 .sparkline span:nth-child(1) { height: 30%; }
@@ -524,15 +524,15 @@ button {
   border: 1px solid var(--line);
   border-radius: 20px;
   padding: 14px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 243, 235, 0.82));
+  background: linear-gradient(180deg, rgba(24, 31, 20, 0.88), rgba(13, 17, 10, 0.88));
   text-align: left;
   color: var(--text);
   cursor: pointer;
 }
 
 .calendar-month.active {
-  border-color: rgba(255, 107, 107, 0.4);
-  box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.2);
+  border-color: rgba(214, 244, 123, 0.36);
+  box-shadow: inset 0 0 0 1px rgba(214, 244, 123, 0.18);
 }
 
 .calendar-month strong,
@@ -554,7 +554,7 @@ button {
   border: 1px solid var(--line);
   border-radius: 20px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.64);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .bill-item,
@@ -578,7 +578,7 @@ button {
   width: 100%;
   height: 10px;
   border-radius: 999px;
-  background: rgba(20, 49, 43, 0.08);
+  background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
   margin-top: 10px;
 }
@@ -591,7 +591,7 @@ button {
 }
 
 .progress-fill.warn {
-  background: linear-gradient(90deg, #d96c3f, #eb9e70);
+  background: linear-gradient(90deg, var(--accent-two), var(--warn));
 }
 
 .subtle-stat {
@@ -621,7 +621,7 @@ button {
   gap: 6px;
   padding: 5px 9px;
   border-radius: 999px;
-  background: rgba(20, 49, 43, 0.06);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--muted);
   font-size: 0.8rem;
 }
@@ -634,7 +634,7 @@ button {
   border: 1px solid var(--line);
   border-radius: 22px;
   padding: 16px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 241, 231, 0.84));
+  background: linear-gradient(180deg, rgba(24, 31, 20, 0.9), rgba(13, 17, 10, 0.92));
 }
 
 .institution-card strong,
@@ -658,7 +658,7 @@ button {
   border-radius: 50%;
   background:
     radial-gradient(circle at center, var(--surface-strong) 48%, transparent 49%),
-    conic-gradient(var(--brand) 0deg, var(--accent-three) var(--ring-angle), rgba(20, 49, 43, 0.08) var(--ring-angle), rgba(20, 49, 43, 0.08) 360deg);
+    conic-gradient(var(--brand) 0deg, var(--accent-three) var(--ring-angle), rgba(255, 255, 255, 0.08) var(--ring-angle), rgba(255, 255, 255, 0.08) 360deg);
   display: grid;
   place-items: center;
 }
@@ -727,7 +727,7 @@ button {
     width: 120px;
     height: 28px;
     border-radius: 999px;
-    background: #1f1628;
+    background: #0b0f08;
     z-index: 2;
   }
 
@@ -740,7 +740,7 @@ button {
     inset: 0 0 84px 0;
     z-index: 12;
     border-right: 0;
-    background: rgba(255, 247, 240, 0.98);
+    background: rgba(11, 15, 8, 0.98);
   }
 
   .dashboard {
@@ -767,7 +767,7 @@ button {
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
     padding: 12px 14px 18px;
-    background: linear-gradient(180deg, rgba(244, 239, 231, 0.6), rgba(244, 239, 231, 0.98));
+    background: linear-gradient(180deg, rgba(13, 18, 10, 0.72), rgba(13, 18, 10, 0.98));
     backdrop-filter: blur(18px);
     border-top: 1px solid var(--line);
   }
@@ -784,8 +784,8 @@ button {
 
   .mobile-tab.active {
     background: var(--surface-strong);
-    color: var(--brand-deep);
-    box-shadow: inset 0 0 0 1px rgba(13, 139, 111, 0.14);
+    color: var(--brand);
+    box-shadow: inset 0 0 0 1px rgba(214, 244, 123, 0.16);
   }
 
   .hero h2,
