@@ -58,6 +58,11 @@ const financialSnapshot = {
   ]
 };
 
+const demoCredentials = {
+  email: "demo@rokda.app",
+  password: "rokda123"
+};
+
 const currency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -71,6 +76,51 @@ const currencyPrecise = new Intl.NumberFormat("en-US", {
 
 function setText(id, value) {
   document.getElementById(id).textContent = value;
+}
+
+function setupAuth() {
+  const authShell = document.getElementById("auth-shell");
+  const appShell = document.getElementById("app-shell");
+  const loginForm = document.getElementById("login-form");
+  const emailInput = document.getElementById("email-input");
+  const passwordInput = document.getElementById("password-input");
+  const authError = document.getElementById("auth-error");
+  const logoutButtons = [
+    document.getElementById("logout-button-desktop"),
+    document.getElementById("logout-button-mobile")
+  ];
+
+  function showApp() {
+    authShell.classList.add("hidden");
+    appShell.classList.remove("hidden");
+  }
+
+  function showAuth() {
+    appShell.classList.add("hidden");
+    authShell.classList.remove("hidden");
+    loginForm.reset();
+    authError.textContent = "";
+  }
+
+  function handleLogin(event) {
+    event.preventDefault();
+    const email = emailInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
+
+    if (email === demoCredentials.email && password === demoCredentials.password) {
+      authError.textContent = "";
+      showApp();
+      return;
+    }
+
+    authError.textContent = "Use the demo login shown on the left to enter the app.";
+  }
+
+  loginForm.addEventListener("submit", handleLogin);
+
+  logoutButtons.forEach((button) => {
+    button.addEventListener("click", showAuth);
+  });
 }
 
 function renderOverview() {
@@ -301,3 +351,4 @@ renderBudgetDetails();
 renderGoals();
 renderAccounts();
 setupNavigation();
+setupAuth();

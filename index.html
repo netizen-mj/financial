@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Northstar Money</title>
+    <title>Rokda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,14 +13,44 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="app-shell">
+    <div class="auth-shell" id="auth-shell">
+      <section class="auth-panel">
+        <div class="auth-copy">
+          <p class="eyebrow">Rokda</p>
+          <h1>Log in to your money dashboard.</h1>
+          <p class="muted">
+            Use the demo account below to unlock your recurring bills, budgets,
+            accounts, and monthly totals.
+          </p>
+          <div class="auth-hint">
+            <strong>Demo login</strong>
+            <span>Email: `demo@rokda.app`</span>
+            <span>Password: `rokda123`</span>
+          </div>
+        </div>
+        <form class="auth-card" id="login-form">
+          <label class="auth-field">
+            <span>Email</span>
+            <input id="email-input" name="email" type="email" placeholder="demo@rokda.app" required />
+          </label>
+          <label class="auth-field">
+            <span>Password</span>
+            <input id="password-input" name="password" type="password" placeholder="rokda123" required />
+          </label>
+          <button class="primary-button auth-submit" type="submit">Log in</button>
+          <p class="auth-error" id="auth-error" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+
+    <div class="app-shell hidden" id="app-shell">
       <div class="app-frame">
         <aside class="sidebar">
           <div class="brand-block">
             <div class="brand-mark">N</div>
             <div>
               <p class="eyebrow">Personal finance</p>
-              <h1>Northstar</h1>
+              <h1>Rokda</h1>
             </div>
           </div>
 
@@ -53,10 +83,10 @@
         <main class="dashboard">
           <header class="mobile-topbar">
             <div>
-              <p class="eyebrow">Northstar Money</p>
+              <p class="eyebrow">Rokda</p>
               <h1 class="mobile-title">Your finances</h1>
             </div>
-            <button class="avatar-chip" type="button">MJ</button>
+            <button class="avatar-chip" id="logout-button-mobile" type="button">MJ</button>
           </header>
 
         <section class="view active" data-view-panel="overview">
@@ -70,7 +100,7 @@
               </p>
             </div>
             <div class="hero-actions">
-              <button class="secondary-button" type="button">Export report</button>
+              <button class="secondary-button" id="logout-button-desktop" type="button">Log out</button>
               <button class="primary-button" type="button" data-view-link="accounts">Connect account</button>
             </div>
           </header>
