@@ -192,6 +192,14 @@ button {
   padding: 28px;
 }
 
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
 .hero {
   justify-content: space-between;
   gap: 24px;
@@ -216,7 +224,9 @@ button {
 }
 
 .hero-grid,
-.content-grid {
+.content-grid,
+.single-column-grid,
+.goal-grid {
   display: grid;
   gap: 18px;
 }
@@ -228,6 +238,14 @@ button {
 
 .content-grid {
   grid-template-columns: 1.2fr 0.8fr 0.8fr;
+}
+
+.single-column-grid {
+  grid-template-columns: 1fr;
+}
+
+.goal-grid {
+  grid-template-columns: 1.1fr 0.9fr;
 }
 
 .panel {
@@ -265,6 +283,14 @@ button {
 .trend-pill.negative {
   background: rgba(217, 108, 63, 0.12);
   color: var(--warn);
+}
+
+.view-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 18px;
 }
 
 .section-tag.neutral {
@@ -374,6 +400,10 @@ button {
   place-items: center;
 }
 
+.large-goal-ring {
+  --size: 220px;
+}
+
 .goal-ring-inner {
   display: grid;
   place-items: center;
@@ -403,7 +433,8 @@ button {
 @media (max-width: 1100px) {
   .page-shell,
   .hero-grid,
-  .content-grid {
+  .content-grid,
+  .goal-grid {
     grid-template-columns: 1fr;
   }
 
@@ -420,6 +451,10 @@ button {
   .hero {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .view-hero {
+    flex-direction: column;
   }
 }
 

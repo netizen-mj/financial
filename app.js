@@ -109,6 +109,8 @@ function renderBudgets() {
 
 function renderSubscriptions() {
   const list = document.getElementById("subscription-list");
+  const detailedList = document.getElementById("subscriptions-detailed-list");
+  const totalMonthly = financialSnapshot.subscriptions.reduce((sum, subscription) => sum + subscription.amount, 0);
 
   financialSnapshot.subscriptions.forEach((subscription) => {
     const row = document.createElement("div");
@@ -124,11 +126,19 @@ function renderSubscriptions() {
       </div>
     `;
     list.appendChild(row);
+
+    const detailedRow = row.cloneNode(true);
+    detailedList.appendChild(detailedRow);
   });
+
+  setText("subscription-monthly-total", `${currencyPrecise.format(totalMonthly)}/mo`);
+  setText("subscription-count", `${financialSnapshot.subscriptions.length} active services`);
 }
 
 function renderTransactions() {
   const list = document.getElementById("transaction-list");
+  const detailedList = document.getElementById("transactions-detailed-list");
+  const netTotal = financialSnapshot.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
 
   financialSnapshot.transactions.forEach((transaction) => {
     const amountClass = transaction.amount < 0 ? "negative" : "positive";
@@ -143,6 +153,72 @@ function renderTransactions() {
       <span class="amount ${amountClass}">${sign}${currencyPrecise.format(Math.abs(transaction.amount))}</span>
     `;
     list.appendChild(row);
+
+    const detailedRow = row.cloneNode(true);
+    detailedList.appendChild(detailedRow);
+  });
+
+  setText(
+    "transaction-total-tag",
+    `${netTotal >= 0 ? "+" : "-"}${currencyPrecise.format(Math.abs(netTotal))} net`
+  );
+}
+
+function renderBudgetDetails() {
+  const detailList = document.getElementById("budget-detail-list");
+  const totalSpent = financialSnapshot.budgets.reduce((sum, budget) => sum + budget.spent, 0);
+  const totalLimit = financialSnapshot.budgets.reduce((sum, budget) => sum + budget.limit, 0);
+
+  financialSnapshot.budgets.forEach((budget) => {
+    const ratio = Math.min((budget.spent / budget.limit) * 100, 100);
+    const row = document.createElement("div");
+    row.className = "budget-row";
+    row.innerHTML = `
+      <div>
+        <strong>${budget.category}</strong>
+        <p class="muted">${currency.format(budget.spent)} spent of ${currency.format(budget.limit)}</p>
+        <div class="progress-rail">
+          <span class="progress-fill ${budget.tone === "warn" ? "warn" : ""}" style="width: ${ratio}%"></span>
+        </div>
+      </div>
+      <span class="pill">${currency.format(Math.max(budget.limit - budget.spent, 0))} left</span>
+    `;
+    detailList.appendChild(row);
+  });
+
+  const overallRatio = totalSpent / totalLimit;
+  setText("budget-summary-tag", overallRatio < 0.85 ? "On track" : "Watch spend");
+  setText("budget-remaining", `${currency.format(totalLimit - totalSpent)} left`);
+}
+
+function renderGoals() {
+  setText("goal-progress-detail", `${financialSnapshot.emergencyFundRatio}%`);
+  setText("goal-summary-copy", `You have funded ${currency.format(12240)} of your emergency cushion and are pacing toward your August target.`);
+  setText("goal-savings-amount", currency.format(financialSnapshot.savingsThisMonth));
+  document.getElementById("goal-savings-progress").style.width = `${financialSnapshot.savingsGoalRatio * 100}%`;
+}
+
+function setupNavigation() {
+  const navItems = Array.from(document.querySelectorAll(".nav-item"));
+  const linkButtons = Array.from(document.querySelectorAll("[data-view-link]"));
+  const views = Array.from(document.querySelectorAll("[data-view-panel]"));
+  const allButtons = [...navItems, ...linkButtons];
+
+  function activate(viewId) {
+    navItems.forEach((button) => {
+      button.classList.toggle("active", button.dataset.view === viewId);
+    });
+
+    views.forEach((view) => {
+      view.classList.toggle("active", view.dataset.viewPanel === viewId);
+    });
+  }
+
+  allButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const viewId = button.dataset.view || button.dataset.viewLink;
+      activate(viewId);
+    });
   });
 }
 
@@ -151,3 +227,6 @@ renderUpcomingBills();
 renderBudgets();
 renderSubscriptions();
 renderTransactions();
+renderBudgetDetails();
+renderGoals();
+setupNavigation();

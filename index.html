@@ -24,11 +24,11 @@
         </div>
 
         <nav class="nav-list">
-          <button class="nav-item active">Overview</button>
-          <button class="nav-item">Subscriptions</button>
-          <button class="nav-item">Budgets</button>
-          <button class="nav-item">Transactions</button>
-          <button class="nav-item">Goals</button>
+          <button class="nav-item active" type="button" data-view="overview">Overview</button>
+          <button class="nav-item" type="button" data-view="subscriptions">Subscriptions</button>
+          <button class="nav-item" type="button" data-view="budgets">Budgets</button>
+          <button class="nav-item" type="button" data-view="transactions">Transactions</button>
+          <button class="nav-item" type="button" data-view="goals">Goals</button>
         </nav>
 
         <section class="sidebar-card">
@@ -44,118 +44,231 @@
           <p class="card-label">Next move</p>
           <h3>Trim recurring spend</h3>
           <p class="muted">Three subscriptions are underused and worth reviewing this week.</p>
-          <button class="ghost-button">Review subscriptions</button>
+          <button class="ghost-button" type="button" data-view-link="subscriptions">Review subscriptions</button>
         </section>
       </aside>
 
       <main class="dashboard">
-        <header class="hero">
-          <div>
-            <p class="eyebrow">Good evening, Maitreyee</p>
-            <h2>Your money is moving in the right direction.</h2>
-            <p class="hero-copy">
-              One place to track cash flow, spot subscription creep, and keep your
-              monthly plan on course.
-            </p>
-          </div>
-          <div class="hero-actions">
-            <button class="secondary-button">Export report</button>
-            <button class="primary-button">Connect account</button>
-          </div>
-        </header>
+        <section class="view active" data-view-panel="overview">
+          <header class="hero">
+            <div>
+              <p class="eyebrow">Good evening, Maitreyee</p>
+              <h2>Your money is moving in the right direction.</h2>
+              <p class="hero-copy">
+                One place to track cash flow, spot subscription creep, and keep your
+                monthly plan on course.
+              </p>
+            </div>
+            <div class="hero-actions">
+              <button class="secondary-button" type="button">Export report</button>
+              <button class="primary-button" type="button">Connect account</button>
+            </div>
+          </header>
 
-        <section class="hero-grid">
-          <article class="panel balance-panel">
-            <div class="panel-heading">
-              <div>
-                <p class="card-label">Linked cash balance</p>
-                <h3 id="cash-balance">$0</h3>
+          <section class="hero-grid">
+            <article class="panel balance-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="card-label">Linked cash balance</p>
+                  <h3 id="cash-balance">$0</h3>
+                </div>
+                <span class="trend-pill positive" id="balance-change">+0%</span>
               </div>
-              <span class="trend-pill positive" id="balance-change">+0%</span>
-            </div>
-            <div class="sparkline" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </article>
+              <div class="sparkline" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </article>
 
-          <article class="panel">
-            <p class="card-label">Monthly spend</p>
-            <h3 id="monthly-spend">$0</h3>
-            <p class="muted">Compared with last month.</p>
-            <div class="big-number-row">
-              <span class="trend-pill negative" id="spend-change">+0%</span>
-              <span class="subtle-stat" id="needs-ratio">Needs 0%</span>
-            </div>
-          </article>
+            <article class="panel">
+              <p class="card-label">Monthly spend</p>
+              <h3 id="monthly-spend">$0</h3>
+              <p class="muted">Compared with last month.</p>
+              <div class="big-number-row">
+                <span class="trend-pill negative" id="spend-change">+0%</span>
+                <span class="subtle-stat" id="needs-ratio">Needs 0%</span>
+              </div>
+            </article>
 
-          <article class="panel">
-            <p class="card-label">Upcoming bills</p>
-            <h3 id="upcoming-bills">$0</h3>
-            <p class="muted">Due in the next 10 days.</p>
-            <div class="bill-stack" id="upcoming-list"></div>
-          </article>
+            <article class="panel">
+              <p class="card-label">Upcoming bills</p>
+              <h3 id="upcoming-bills">$0</h3>
+              <p class="muted">Due in the next 10 days.</p>
+              <div class="bill-stack" id="upcoming-list"></div>
+            </article>
+          </section>
+
+          <section class="content-grid">
+            <article class="panel large-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Spending plan</p>
+                  <h3>Budget health</h3>
+                </div>
+                <span class="section-tag">Live</span>
+              </div>
+              <div class="budget-list" id="budget-list"></div>
+            </article>
+
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Recurring charges</p>
+                  <h3>Subscriptions</h3>
+                </div>
+                <button class="text-button" type="button" data-view-link="subscriptions">Manage</button>
+              </div>
+              <div class="subscription-list" id="subscription-list"></div>
+            </article>
+
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Savings goal</p>
+                  <h3>Emergency fund</h3>
+                </div>
+                <span class="section-tag neutral">4 months left</span>
+              </div>
+              <div class="goal-ring">
+                <div class="goal-ring-inner">
+                  <strong id="goal-progress">0%</strong>
+                  <span>funded</span>
+                </div>
+              </div>
+              <p class="muted">
+                You are on pace to reach your target by August if current contributions
+                hold steady.
+              </p>
+            </article>
+
+            <article class="panel wide-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Latest activity</p>
+                  <h3>Transactions</h3>
+                </div>
+                <button class="text-button" type="button" data-view-link="transactions">View all</button>
+              </div>
+              <div class="transaction-list" id="transaction-list"></div>
+            </article>
+          </section>
         </section>
 
-        <section class="content-grid">
-          <article class="panel large-panel">
-            <div class="section-heading">
-              <div>
-                <p class="card-label">Spending plan</p>
-                <h3>Budget health</h3>
-              </div>
-              <span class="section-tag">Live</span>
+        <section class="view" data-view-panel="subscriptions">
+          <header class="view-hero">
+            <div>
+              <p class="eyebrow">Recurring spend</p>
+              <h2>Keep every subscription earned.</h2>
+              <p class="hero-copy">Spot underused services, upcoming renewals, and savings opportunities in one place.</p>
             </div>
-            <div class="budget-list" id="budget-list"></div>
-          </article>
+            <span class="trend-pill negative" id="subscription-monthly-total">$0/mo</span>
+          </header>
+          <section class="single-column-grid">
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Active services</p>
+                  <h3>Subscription list</h3>
+                </div>
+                <span class="section-tag neutral" id="subscription-count">0 active</span>
+              </div>
+              <div class="subscription-list" id="subscriptions-detailed-list"></div>
+            </article>
+          </section>
+        </section>
 
-          <article class="panel">
-            <div class="section-heading">
-              <div>
-                <p class="card-label">Recurring charges</p>
-                <h3>Subscriptions</h3>
-              </div>
-              <button class="text-button">Manage</button>
+        <section class="view" data-view-panel="budgets">
+          <header class="view-hero">
+            <div>
+              <p class="eyebrow">Monthly plan</p>
+              <h2>Budgets with real breathing room.</h2>
+              <p class="hero-copy">Track where your money is going and which categories are starting to drift.</p>
             </div>
-            <div class="subscription-list" id="subscription-list"></div>
-          </article>
+            <span class="section-tag" id="budget-summary-tag">On track</span>
+          </header>
+          <section class="single-column-grid">
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Categories</p>
+                  <h3>Budget breakdown</h3>
+                </div>
+                <span class="section-tag neutral" id="budget-remaining">$0 left</span>
+              </div>
+              <div class="budget-list" id="budget-detail-list"></div>
+            </article>
+          </section>
+        </section>
 
-          <article class="panel">
-            <div class="section-heading">
-              <div>
-                <p class="card-label">Savings goal</p>
-                <h3>Emergency fund</h3>
-              </div>
-              <span class="section-tag neutral">4 months left</span>
+        <section class="view" data-view-panel="transactions">
+          <header class="view-hero">
+            <div>
+              <p class="eyebrow">Cash flow</p>
+              <h2>Every swipe, transfer, and paycheck.</h2>
+              <p class="hero-copy">Recent activity is grouped here so you can catch unexpected charges quickly.</p>
             </div>
-            <div class="goal-ring">
-              <div class="goal-ring-inner">
-                <strong id="goal-progress">0%</strong>
-                <span>funded</span>
+            <span class="section-tag neutral" id="transaction-total-tag">$0 net</span>
+          </header>
+          <section class="single-column-grid">
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Activity feed</p>
+                  <h3>Transaction history</h3>
+                </div>
+                <button class="text-button" type="button" data-view-link="overview">Back to overview</button>
               </div>
-            </div>
-            <p class="muted">
-              You are on pace to reach your target by August if current contributions
-              hold steady.
-            </p>
-          </article>
+              <div class="transaction-list" id="transactions-detailed-list"></div>
+            </article>
+          </section>
+        </section>
 
-          <article class="panel wide-panel">
-            <div class="section-heading">
-              <div>
-                <p class="card-label">Latest activity</p>
-                <h3>Transactions</h3>
-              </div>
-              <button class="text-button">View all</button>
+        <section class="view" data-view-panel="goals">
+          <header class="view-hero">
+            <div>
+              <p class="eyebrow">Savings progress</p>
+              <h2>Goals that stay visible.</h2>
+              <p class="hero-copy">Your emergency fund target, monthly savings pace, and next best action all in one view.</p>
             </div>
-            <div class="transaction-list" id="transaction-list"></div>
-          </article>
+            <span class="section-tag" id="goal-pace-tag">Ahead of pace</span>
+          </header>
+          <section class="goal-grid">
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Emergency fund</p>
+                  <h3>Goal progress</h3>
+                </div>
+                <span class="section-tag neutral">Target: $18,000</span>
+              </div>
+              <div class="goal-ring large-goal-ring">
+                <div class="goal-ring-inner">
+                  <strong id="goal-progress-detail">0%</strong>
+                  <span>funded</span>
+                </div>
+              </div>
+              <p class="muted" id="goal-summary-copy"></p>
+            </article>
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Monthly savings</p>
+                  <h3>Momentum</h3>
+                </div>
+                <span class="trend-pill positive" id="goal-savings-amount">$0</span>
+              </div>
+              <p class="muted">Your reduced recurring spend and steady deposits are keeping this goal on track.</p>
+              <div class="meter">
+                <span id="goal-savings-progress"></span>
+              </div>
+            </article>
+          </section>
         </section>
       </main>
     </div>
