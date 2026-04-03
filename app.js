@@ -1,7 +1,8 @@
-const financialSnapshot = {
+const defaultFinancialSnapshot = {
   cashBalance: 24840,
   balanceChange: 12.4,
   monthlySpend: 2281.6,
+  monthlyIncome: 6120,
   spendChange: -4.5,
   needsRatio: 61,
   savingsThisMonth: 286,
@@ -62,10 +63,33 @@ const financialSnapshot = {
   ]
 };
 
-const demoCredentials = {
-  email: "mj29",
-  password: "jam3"
+const defaultMonthlyCalendar = [
+  { month: "January", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "February", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "March", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "April", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "May", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "June", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "July", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "August", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "September", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "October", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  { month: "November", income: 0, recurring: 0, note: "Add this month when you have the updated numbers." },
+  {
+    month: "December",
+    income: 6120,
+    recurring: 2281.6,
+    note: "December is loaded from your current sheet data."
+  }
+];
+
+const storageKeys = {
+  snapshot: "rokda-financial-snapshot",
+  calendar: "rokda-monthly-calendar"
 };
+
+let financialSnapshot = loadStoredSnapshot();
+let monthlyCalendar = loadStoredCalendar();
 
 const currency = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -80,6 +104,33 @@ const currencyPrecise = new Intl.NumberFormat("en-US", {
 
 function setText(id, value) {
   document.getElementById(id).textContent = value;
+}
+
+function cloneData(data) {
+  return JSON.parse(JSON.stringify(data));
+}
+
+function loadStoredSnapshot() {
+  try {
+    const stored = localStorage.getItem(storageKeys.snapshot);
+    return stored ? JSON.parse(stored) : cloneData(defaultFinancialSnapshot);
+  } catch (error) {
+    return cloneData(defaultFinancialSnapshot);
+  }
+}
+
+function loadStoredCalendar() {
+  try {
+    const stored = localStorage.getItem(storageKeys.calendar);
+    return stored ? JSON.parse(stored) : cloneData(defaultMonthlyCalendar);
+  } catch (error) {
+    return cloneData(defaultMonthlyCalendar);
+  }
+}
+
+function persistData() {
+  localStorage.setItem(storageKeys.snapshot, JSON.stringify(financialSnapshot));
+  localStorage.setItem(storageKeys.calendar, JSON.stringify(monthlyCalendar));
 }
 
 function setupAuth() {
@@ -108,10 +159,10 @@ function setupAuth() {
 
   function handleLogin(event) {
     event.preventDefault();
-    const email = emailInput.value.trim().toLowerCase();
+    const username = emailInput.value.trim();
     const password = passwordInput.value;
 
-    if (email === demoCredentials.email && password === demoCredentials.password) {
+    if (username && password) {
       authError.textContent = "";
       showApp();
       return;
@@ -136,6 +187,7 @@ function renderOverview() {
     "spend-change",
     `${financialSnapshot.spendChange > 0 ? "+" : ""}${financialSnapshot.spendChange}%`
   );
+  setText("monthly-income", currencyPrecise.format(financialSnapshot.monthlyIncome));
   setText("needs-ratio", `Needs ${financialSnapshot.needsRatio}%`);
   setText("saved-total", currency.format(financialSnapshot.savingsThisMonth));
   setText("goal-progress", `${financialSnapshot.emergencyFundRatio}%`);
@@ -152,6 +204,7 @@ function renderOverview() {
 
 function renderUpcomingBills() {
   const list = document.getElementById("upcoming-list");
+  list.innerHTML = "";
 
   financialSnapshot.upcomingBills.forEach((bill) => {
     const matchingBill = financialSnapshot.recurringBills.find((item) => item.name === bill.name);
@@ -172,6 +225,7 @@ function renderUpcomingBills() {
 
 function renderBudgets() {
   const list = document.getElementById("budget-list");
+  list.innerHTML = "";
 
   financialSnapshot.budgets.forEach((budget) => {
     const ratio = Math.min((budget.spent / budget.limit) * 100, 100);
@@ -194,6 +248,8 @@ function renderBudgets() {
 function renderSubscriptions() {
   const list = document.getElementById("subscription-list");
   const detailedList = document.getElementById("subscriptions-detailed-list");
+  list.innerHTML = "";
+  detailedList.innerHTML = "";
   const totalMonthly = financialSnapshot.recurringBills.reduce((sum, bill) => sum + bill.amount, 0);
 
   financialSnapshot.recurringBills.forEach((subscription) => {
@@ -222,6 +278,8 @@ function renderSubscriptions() {
 function renderTransactions() {
   const list = document.getElementById("transaction-list");
   const detailedList = document.getElementById("transactions-detailed-list");
+  list.innerHTML = "";
+  detailedList.innerHTML = "";
   const netTotal = financialSnapshot.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
 
   financialSnapshot.transactions.forEach((transaction) => {
@@ -250,6 +308,7 @@ function renderTransactions() {
 
 function renderBudgetDetails() {
   const detailList = document.getElementById("budget-detail-list");
+  detailList.innerHTML = "";
   const totalSpent = financialSnapshot.budgets.reduce((sum, budget) => sum + budget.spent, 0);
   const totalLimit = financialSnapshot.budgets.reduce((sum, budget) => sum + budget.limit, 0);
 
@@ -285,6 +344,8 @@ function renderGoals() {
 function renderAccounts() {
   const institutionList = document.getElementById("institution-list");
   const accountList = document.getElementById("account-list");
+  institutionList.innerHTML = "";
+  accountList.innerHTML = "";
   const totalLinked = financialSnapshot.accounts.reduce((sum, account) => sum + account.balance, 0);
 
   financialSnapshot.institutions.forEach((institution) => {
@@ -318,6 +379,168 @@ function renderAccounts() {
   setText("accounts-total-tag", `${currency.format(totalLinked)} linked`);
 }
 
+function renderCalendar() {
+  const calendarGrid = document.getElementById("calendar-grid");
+  calendarGrid.innerHTML = "";
+  const activeMonth = document.getElementById("calendar-active-month");
+  const detailTitle = document.getElementById("calendar-detail-title");
+  const detailStatus = document.getElementById("calendar-detail-status");
+  const income = document.getElementById("calendar-income");
+  const recurring = document.getElementById("calendar-recurring");
+  const leftover = document.getElementById("calendar-leftover");
+  const note = document.getElementById("calendar-note");
+
+  function selectMonth(monthName) {
+    const selected = monthlyCalendar.find((month) => month.month === monthName);
+    if (!selected) {
+      return;
+    }
+
+    activeMonth.textContent = selected.month;
+    detailTitle.textContent = `${selected.month} snapshot`;
+    detailStatus.textContent = selected.income > 0 ? "Loaded" : "Empty";
+    income.textContent = currencyPrecise.format(selected.income);
+    recurring.textContent = currencyPrecise.format(selected.recurring);
+    leftover.textContent = currencyPrecise.format(selected.income - selected.recurring);
+    note.textContent = selected.note;
+
+    Array.from(calendarGrid.querySelectorAll(".calendar-month")).forEach((button) => {
+      button.classList.toggle("active", button.dataset.month === monthName);
+    });
+  }
+
+  monthlyCalendar.forEach((month) => {
+    const button = document.createElement("button");
+    button.className = "calendar-month";
+    button.type = "button";
+    button.dataset.month = month.month;
+    button.innerHTML = `
+      <strong>${month.month}</strong>
+      <span>${month.income > 0 ? currencyPrecise.format(month.income) : "No income yet"}</span>
+      <span>${month.recurring > 0 ? `${currencyPrecise.format(month.recurring)} recurring` : "Waiting for data"}</span>
+    `;
+    button.addEventListener("click", () => selectMonth(month.month));
+    calendarGrid.appendChild(button);
+  });
+
+  selectMonth("December");
+}
+
+function setupEditor() {
+  const editorPanel = document.getElementById("editor-panel");
+  const openButtons = [
+    document.getElementById("open-editor-desktop"),
+    document.getElementById("open-editor-mobile")
+  ];
+  const closeButton = document.getElementById("close-editor");
+  const resetButton = document.getElementById("reset-editor");
+  const form = document.getElementById("editor-form");
+
+  const fieldMap = [
+    ["edit-monthly-income", () => financialSnapshot.monthlyIncome, (value) => { financialSnapshot.monthlyIncome = value; updateDecemberCalendar(); }],
+    ["edit-monthly-spend", () => financialSnapshot.monthlySpend, (value) => { financialSnapshot.monthlySpend = value; }],
+    ["edit-rent", () => getBillAmount("Rent"), (value) => setBillAmount("Rent", value)],
+    ["edit-electricity", () => getBillAmount("Electricity"), (value) => setBillAmount("Electricity", value)],
+    ["edit-loan1", () => getBillAmount("Loan 1"), (value) => setBillAmount("Loan 1", value)],
+    ["edit-loan2", () => getBillAmount("Loan 2"), (value) => setBillAmount("Loan 2", value)],
+    ["edit-wifi", () => getBillAmount("Wifi"), (value) => setBillAmount("Wifi", value)],
+    ["edit-phone", () => getBillAmount("Phone"), (value) => setBillAmount("Phone", value)],
+    ["edit-bus-pass", () => getBillAmount("Bus Pass"), (value) => setBillAmount("Bus Pass", value)],
+    ["edit-renter-insurance", () => getBillAmount("Renter Insurance"), (value) => setBillAmount("Renter Insurance", value)],
+    ["edit-bus-pass-2", () => getBillAmount("Bus Pass 2"), (value) => setBillAmount("Bus Pass 2", value)],
+    ["edit-macbook", () => getBillAmount("Macbook"), (value) => setBillAmount("Macbook", value)],
+    ["edit-chase", () => getAccountBalance("Chase"), (value) => setAccountBalance("Chase", value)],
+    ["edit-amex", () => getAccountBalance("Amex"), (value) => setAccountBalance("Amex", value)],
+    ["edit-apple", () => getAccountBalance("Apple"), (value) => setAccountBalance("Apple", value)],
+    ["edit-sofi", () => getAccountBalance("SoFi"), (value) => setAccountBalance("SoFi", value)],
+    ["edit-robinhood", () => getAccountBalance("Robinhood"), (value) => setAccountBalance("Robinhood", value)],
+    ["edit-401k", () => getAccountBalance("401k"), (value) => setAccountBalance("401k", value)]
+  ];
+
+  function fillForm() {
+    fieldMap.forEach(([id, getter]) => {
+      document.getElementById(id).value = getter();
+    });
+  }
+
+  function openEditor() {
+    fillForm();
+    editorPanel.classList.remove("hidden");
+  }
+
+  function closeEditor() {
+    editorPanel.classList.add("hidden");
+  }
+
+  openButtons.forEach((button) => {
+    button.addEventListener("click", openEditor);
+  });
+
+  closeButton.addEventListener("click", closeEditor);
+
+  resetButton.addEventListener("click", () => {
+    financialSnapshot = cloneData(defaultFinancialSnapshot);
+    monthlyCalendar = cloneData(defaultMonthlyCalendar);
+    persistData();
+    rerenderApp();
+    fillForm();
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    fieldMap.forEach(([id, , setter]) => {
+      setter(Number(document.getElementById(id).value || 0));
+    });
+    updateDecemberCalendar();
+    persistData();
+    rerenderApp();
+    closeEditor();
+  });
+}
+
+function getBillAmount(name) {
+  return financialSnapshot.recurringBills.find((bill) => bill.name === name)?.amount ?? 0;
+}
+
+function setBillAmount(name, value) {
+  const bill = financialSnapshot.recurringBills.find((entry) => entry.name === name);
+  if (bill) {
+    bill.amount = value;
+    bill.status = value > 0 ? "Active" : "Not set";
+  }
+}
+
+function getAccountBalance(name) {
+  return financialSnapshot.accounts.find((account) => account.institution === name)?.balance ?? 0;
+}
+
+function setAccountBalance(name, value) {
+  const account = financialSnapshot.accounts.find((entry) => entry.institution === name);
+  if (account) {
+    account.balance = value;
+  }
+}
+
+function updateDecemberCalendar() {
+  const december = monthlyCalendar.find((month) => month.month === "December");
+  if (december) {
+    december.income = financialSnapshot.monthlyIncome;
+    december.recurring = financialSnapshot.recurringBills.reduce((sum, bill) => sum + bill.amount, 0);
+  }
+}
+
+function rerenderApp() {
+  renderOverview();
+  renderUpcomingBills();
+  renderBudgets();
+  renderSubscriptions();
+  renderTransactions();
+  renderBudgetDetails();
+  renderGoals();
+  renderAccounts();
+  renderCalendar();
+}
+
 function setupNavigation() {
   const navItems = Array.from(document.querySelectorAll(".nav-item"));
   const mobileTabs = Array.from(document.querySelectorAll(".mobile-tab"));
@@ -347,13 +570,7 @@ function setupNavigation() {
   });
 }
 
-renderOverview();
-renderUpcomingBills();
-renderBudgets();
-renderSubscriptions();
-renderTransactions();
-renderBudgetDetails();
-renderGoals();
-renderAccounts();
+rerenderApp();
 setupNavigation();
 setupAuth();
+setupEditor();

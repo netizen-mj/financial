@@ -40,6 +40,109 @@
 
     <div class="app-shell hidden" id="app-shell">
       <div class="app-frame">
+        <aside class="editor-panel hidden" id="editor-panel">
+          <div class="section-heading">
+            <div>
+              <p class="card-label">Edit data</p>
+              <h3>Update your numbers</h3>
+            </div>
+            <button class="text-button" id="close-editor" type="button">Close</button>
+          </div>
+          <form class="editor-form" id="editor-form">
+            <div class="editor-group">
+              <label class="auth-field">
+                <span>Monthly income</span>
+                <input id="edit-monthly-income" name="monthlyIncome" type="number" step="0.01" />
+              </label>
+              <label class="auth-field">
+                <span>Monthly spend</span>
+                <input id="edit-monthly-spend" name="monthlySpend" type="number" step="0.01" />
+              </label>
+            </div>
+
+            <div class="editor-group">
+              <p class="card-label">Recurring bills</p>
+              <div class="editor-list">
+                <label class="auth-field">
+                  <span>Rent</span>
+                  <input id="edit-rent" name="rent" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Electricity</span>
+                  <input id="edit-electricity" name="electricity" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Loan 1</span>
+                  <input id="edit-loan1" name="loan1" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Loan 2</span>
+                  <input id="edit-loan2" name="loan2" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Wifi</span>
+                  <input id="edit-wifi" name="wifi" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Phone</span>
+                  <input id="edit-phone" name="phone" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Bus Pass</span>
+                  <input id="edit-bus-pass" name="busPass" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Renter Insurance</span>
+                  <input id="edit-renter-insurance" name="renterInsurance" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Bus Pass 2</span>
+                  <input id="edit-bus-pass-2" name="busPass2" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Macbook</span>
+                  <input id="edit-macbook" name="macbook" type="number" step="0.01" />
+                </label>
+              </div>
+            </div>
+
+            <div class="editor-group">
+              <p class="card-label">Linked accounts</p>
+              <div class="editor-list">
+                <label class="auth-field">
+                  <span>Chase</span>
+                  <input id="edit-chase" name="chase" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Amex</span>
+                  <input id="edit-amex" name="amex" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Apple</span>
+                  <input id="edit-apple" name="apple" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>SoFi</span>
+                  <input id="edit-sofi" name="sofi" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>Robinhood</span>
+                  <input id="edit-robinhood" name="robinhood" type="number" step="0.01" />
+                </label>
+                <label class="auth-field">
+                  <span>401k</span>
+                  <input id="edit-401k" name="retirement401k" type="number" step="0.01" />
+                </label>
+              </div>
+            </div>
+
+            <div class="editor-actions">
+              <button class="secondary-button" id="reset-editor" type="button">Reset</button>
+              <button class="primary-button" type="submit">Save changes</button>
+            </div>
+          </form>
+        </aside>
+
         <aside class="sidebar">
           <div class="brand-block">
             <div class="brand-mark">N</div>
@@ -51,6 +154,7 @@
 
           <nav class="nav-list">
             <button class="nav-item active" type="button" data-view="overview">Overview</button>
+            <button class="nav-item" type="button" data-view="calendar">Calendar</button>
             <button class="nav-item" type="button" data-view="subscriptions">Subscriptions</button>
             <button class="nav-item" type="button" data-view="budgets">Budgets</button>
             <button class="nav-item" type="button" data-view="transactions">Transactions</button>
@@ -81,7 +185,10 @@
               <p class="eyebrow">Rokda</p>
               <h1 class="mobile-title">Your finances</h1>
             </div>
-            <button class="avatar-chip" id="logout-button-mobile" type="button">MJ</button>
+            <div class="mobile-topbar-actions">
+              <button class="icon-chip" id="open-editor-mobile" type="button">Edit</button>
+              <button class="avatar-chip" id="logout-button-mobile" type="button">MJ</button>
+            </div>
           </header>
 
         <section class="view active" data-view-panel="overview">
@@ -95,6 +202,7 @@
               </p>
             </div>
             <div class="hero-actions">
+              <button class="secondary-button" id="open-editor-desktop" type="button">Edit data</button>
               <button class="secondary-button" id="logout-button-desktop" type="button">Log out</button>
               <button class="primary-button" type="button" data-view-link="accounts">Connect account</button>
             </div>
@@ -125,6 +233,7 @@
               <p class="card-label">Monthly spend</p>
               <h3 id="monthly-spend">$0</h3>
               <p class="muted">Compared with last month.</p>
+              <p class="income-line">Monthly income <strong id="monthly-income">$0</strong> for 4 weeks</p>
               <div class="big-number-row">
                 <span class="trend-pill negative" id="spend-change">+0%</span>
                 <span class="subtle-stat" id="needs-ratio">Needs 0%</span>
@@ -191,6 +300,53 @@
                 <button class="text-button" type="button" data-view-link="transactions">View all</button>
               </div>
               <div class="transaction-list" id="transaction-list"></div>
+            </article>
+          </section>
+        </section>
+
+        <section class="view" data-view-panel="calendar">
+          <header class="view-hero">
+            <div>
+              <p class="eyebrow">Monthly planner</p>
+              <h2>Track each month as it changes.</h2>
+              <p class="hero-copy">Use this calendar view to compare income, recurring bills, and what stays left over month by month.</p>
+            </div>
+            <span class="section-tag neutral" id="calendar-year-label">2026</span>
+          </header>
+          <section class="calendar-layout">
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Months</p>
+                  <h3>Year at a glance</h3>
+                </div>
+                <span class="section-tag" id="calendar-active-month">December</span>
+              </div>
+              <div class="calendar-grid" id="calendar-grid"></div>
+            </article>
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Selected month</p>
+                  <h3 id="calendar-detail-title">December snapshot</h3>
+                </div>
+                <span class="trend-pill positive" id="calendar-detail-status">Current</span>
+              </div>
+              <div class="calendar-stats">
+                <div class="calendar-stat">
+                  <span class="card-label">Income</span>
+                  <strong id="calendar-income">$0</strong>
+                </div>
+                <div class="calendar-stat">
+                  <span class="card-label">Recurring</span>
+                  <strong id="calendar-recurring">$0</strong>
+                </div>
+                <div class="calendar-stat">
+                  <span class="card-label">Left after recurring</span>
+                  <strong id="calendar-leftover">$0</strong>
+                </div>
+              </div>
+              <p class="muted" id="calendar-note">December is loaded from your current sheet data.</p>
             </article>
           </section>
         </section>
@@ -342,7 +498,7 @@
 
         <nav class="mobile-tabbar">
           <button class="mobile-tab active" type="button" data-view="overview">Home</button>
-          <button class="mobile-tab" type="button" data-view="subscriptions">Subs</button>
+          <button class="mobile-tab" type="button" data-view="calendar">Calendar</button>
           <button class="mobile-tab" type="button" data-view="transactions">Activity</button>
           <button class="mobile-tab" type="button" data-view="goals">Goals</button>
           <button class="mobile-tab" type="button" data-view="accounts">Accounts</button>

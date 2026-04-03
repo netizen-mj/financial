@@ -133,7 +133,7 @@ button {
   width: min(1280px, 100%);
   min-height: calc(100vh - 48px);
   display: grid;
-  grid-template-columns: 290px minmax(0, 1fr);
+  grid-template-columns: 320px 290px minmax(0, 1fr);
   margin: 0 auto;
   border-radius: 36px;
   overflow: hidden;
@@ -155,6 +155,35 @@ button {
   background:
     linear-gradient(180deg, rgba(255, 246, 238, 0.9), rgba(255, 236, 226, 0.92));
   backdrop-filter: blur(18px);
+}
+
+.editor-panel {
+  padding: 28px 22px;
+  border-right: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 252, 248, 0.92), rgba(255, 239, 230, 0.92));
+  overflow: auto;
+}
+
+.editor-form,
+.editor-group,
+.editor-list,
+.editor-actions,
+.mobile-topbar-actions {
+  display: grid;
+  gap: 14px;
+}
+
+.editor-group {
+  margin-top: 18px;
+}
+
+.editor-list {
+  grid-template-columns: 1fr;
+}
+
+.editor-actions {
+  grid-template-columns: 1fr 1fr;
+  margin-top: 6px;
 }
 
 .brand-block,
@@ -324,6 +353,15 @@ button {
   box-shadow: 0 16px 36px rgba(13, 139, 111, 0.22);
 }
 
+.icon-chip {
+  border: 0;
+  border-radius: 14px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text);
+  font-weight: 700;
+}
+
 .view {
   display: none;
 }
@@ -361,7 +399,8 @@ button {
 .hero-grid,
 .content-grid,
 .single-column-grid,
-.goal-grid {
+.goal-grid,
+.calendar-layout {
   display: grid;
   gap: 18px;
 }
@@ -381,6 +420,10 @@ button {
 
 .goal-grid {
   grid-template-columns: 1.1fr 0.9fr;
+}
+
+.calendar-layout {
+  grid-template-columns: 1.15fr 0.85fr;
 }
 
 .panel {
@@ -462,9 +505,52 @@ button {
 .subscription-list,
 .transaction-list,
 .account-list,
-.connect-grid {
+.connect-grid,
+.calendar-grid,
+.calendar-stats {
   display: grid;
   gap: 14px;
+}
+
+.calendar-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.calendar-month {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 243, 235, 0.82));
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.calendar-month.active {
+  border-color: rgba(255, 107, 107, 0.4);
+  box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.2);
+}
+
+.calendar-month strong,
+.calendar-stat strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.calendar-month span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.calendar-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.calendar-stat {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.64);
 }
 
 .bill-item,
@@ -507,6 +593,16 @@ button {
 .subtle-stat {
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.income-line {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.income-line strong {
+  color: var(--text);
 }
 
 .subscription-meta,
@@ -635,6 +731,14 @@ button {
     display: none;
   }
 
+  .editor-panel {
+    position: fixed;
+    inset: 0 0 84px 0;
+    z-index: 12;
+    border-right: 0;
+    background: rgba(255, 247, 240, 0.98);
+  }
+
   .dashboard {
     padding: 18px 18px 96px;
   }
@@ -644,6 +748,12 @@ button {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 18px;
+  }
+
+  .mobile-topbar-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
   }
 
   .mobile-tabbar {
@@ -692,7 +802,9 @@ button {
 
   .hero-grid,
   .content-grid,
-  .goal-grid {
+  .goal-grid,
+  .calendar-layout,
+  .calendar-stats {
     grid-template-columns: 1fr;
   }
 
@@ -712,5 +824,9 @@ button {
 
   .connect-grid {
     grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
