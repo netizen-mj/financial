@@ -45,22 +45,26 @@ const financialSnapshot = {
     { merchant: "Sweetgreen", category: "Dining", date: "Mar 29", amount: -16.8 }
   ],
   accounts: [
-    { institution: "Chase", account: "Total Checking", type: "Checking", balance: 8420 },
-    { institution: "Ally", account: "High Yield Savings", type: "Savings", balance: 16420 },
-    { institution: "Amex", account: "Gold Card", type: "Credit", balance: -1294 },
-    { institution: "Fidelity", account: "Brokerage", type: "Investment", balance: 11294 }
+    { institution: "Chase", account: "Linked balance", type: "Checking", balance: 2350 },
+    { institution: "Amex", account: "Linked balance", type: "Credit", balance: 2.24 },
+    { institution: "Apple", account: "Linked balance", type: "Savings", balance: 46417 },
+    { institution: "SoFi", account: "Linked balance", type: "Checking", balance: 1357 },
+    { institution: "Robinhood", account: "Linked balance", type: "Investment", balance: 6082 },
+    { institution: "401k", account: "Linked balance", type: "Retirement", balance: 11489 }
   ],
   institutions: [
     { name: "Chase", note: "Checking, savings, cards" },
-    { name: "Bank of America", note: "Checking and credit" },
-    { name: "Wells Fargo", note: "Banking and loans" },
-    { name: "Capital One", note: "Cards and checking" }
+    { name: "Amex", note: "Cards and high-yield savings" },
+    { name: "Apple", note: "Wallet and savings" },
+    { name: "SoFi", note: "Banking and checking" },
+    { name: "Robinhood", note: "Brokerage and investing" },
+    { name: "401k", note: "Retirement account" }
   ]
 };
 
 const demoCredentials = {
-  email: "demo@rokda.app",
-  password: "rokda123"
+  email: "mj29",
+  password: "jam3"
 };
 
 const currency = new Intl.NumberFormat("en-US", {
@@ -113,7 +117,7 @@ function setupAuth() {
       return;
     }
 
-    authError.textContent = "Use the demo login shown on the left to enter the app.";
+    authError.textContent = "Incorrect username or password.";
   }
 
   loginForm.addEventListener("submit", handleLogin);

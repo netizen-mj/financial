@@ -82,14 +82,6 @@ button {
   line-height: 1;
 }
 
-.auth-hint {
-  display: grid;
-  gap: 6px;
-  padding: 18px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(255, 209, 102, 0.22));
-}
-
 .auth-card {
   padding: 26px;
   display: grid;
