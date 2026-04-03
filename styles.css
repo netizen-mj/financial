@@ -133,41 +133,36 @@ button {
 
 .app-shell {
   min-height: 100vh;
-  padding: 20px 0;
-  display: grid;
-  place-items: center;
+  padding: 24px;
+  display: block;
 }
 
 .app-frame {
-  width: min(430px, calc(100vw - 20px));
-  min-height: min(880px, calc(100vh - 24px));
-  display: block;
-  border-radius: 38px;
+  width: min(1280px, 100%);
+  min-height: calc(100vh - 48px);
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  margin: 0 auto;
+  border-radius: 36px;
   overflow: hidden;
-  border: 8px solid #1f1628;
+  border: 1px solid rgba(37, 27, 45, 0.08);
   background:
     linear-gradient(180deg, rgba(255, 251, 247, 0.98), rgba(255, 241, 231, 0.98));
-  box-shadow:
-    0 20px 40px rgba(31, 22, 40, 0.2),
-    0 60px 120px rgba(31, 22, 40, 0.22);
+  box-shadow: 0 36px 120px rgba(31, 22, 40, 0.14);
   position: relative;
 }
 
 .app-frame::before {
-  content: "";
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 28px;
-  border-radius: 999px;
-  background: #1f1628;
-  z-index: 2;
+  display: none;
 }
 
 .sidebar {
-  display: none;
+  display: block;
+  padding: 28px 22px;
+  border-right: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 246, 238, 0.9), rgba(255, 236, 226, 0.92));
+  backdrop-filter: blur(18px);
 }
 
 .brand-block,
@@ -312,12 +307,13 @@ button {
 }
 
 .dashboard {
-  padding: 56px 16px 100px;
+  padding: 28px 28px 34px;
+  overflow: auto;
 }
 
 .mobile-topbar,
 .mobile-tabbar {
-  display: block;
+  display: none;
 }
 
 .mobile-title {
@@ -345,7 +341,7 @@ button {
 }
 
 .hero {
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 22px;
@@ -353,9 +349,9 @@ button {
 }
 
 .hero h2 {
-  font-size: clamp(2rem, 8vw, 2.8rem);
+  font-size: clamp(2.3rem, 5vw, 4rem);
   line-height: 1;
-  max-width: none;
+  max-width: 11ch;
 }
 
 .hero-copy {
@@ -365,9 +361,9 @@ button {
 
 .hero-actions {
   gap: 12px;
-  align-self: stretch;
-  width: 100%;
-  flex-wrap: wrap;
+  align-self: flex-start;
+  width: auto;
+  flex-wrap: nowrap;
 }
 
 .hero-grid,
@@ -379,12 +375,12 @@ button {
 }
 
 .hero-grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr;
   margin-bottom: 18px;
 }
 
 .content-grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.2fr 0.8fr 0.8fr;
 }
 
 .single-column-grid {
@@ -392,7 +388,7 @@ button {
 }
 
 .goal-grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
 }
 
 .panel {
@@ -402,7 +398,7 @@ button {
 
 .large-panel,
 .wide-panel {
-  grid-column: span 1;
+  grid-column: span 2;
 }
 
 .panel-heading,
@@ -623,9 +619,28 @@ button {
   .app-frame {
     width: 100vw;
     min-height: 100vh;
+    display: block;
     border-radius: 0;
     border-width: 0;
     box-shadow: none;
+  }
+
+  .app-frame::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 28px;
+    border-radius: 999px;
+    background: #1f1628;
+    z-index: 2;
+  }
+
+  .sidebar {
+    display: none;
   }
 
   .dashboard {
@@ -671,6 +686,31 @@ button {
   .view-hero h2 {
     max-width: none;
     font-size: clamp(1.9rem, 8vw, 2.4rem);
+  }
+
+  .hero {
+    flex-direction: column;
+  }
+
+  .hero-actions {
+    width: 100%;
+    align-self: stretch;
+    flex-wrap: wrap;
+  }
+
+  .hero-grid,
+  .content-grid,
+  .goal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .large-panel,
+  .wide-panel {
+    grid-column: span 1;
+  }
+
+  .view-hero {
+    flex-direction: column;
   }
 
   .primary-button,
