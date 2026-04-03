@@ -19,16 +19,16 @@ const financialSnapshot = {
     { category: "Shopping", spent: 364, limit: 350, tone: "warn" }
   ],
   recurringBills: [
-    { name: "Rent", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Electricity", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Loan 1", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Loan 2", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Wifi", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Phone", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Bus Pass", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Renter Insurance", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Bus Pass 2", cadence: "Recurring bill", status: "Tracked in sheet" },
-    { name: "Macbook", cadence: "Recurring bill", status: "Tracked in sheet" }
+    { name: "Rent", amount: 1579.0, cadence: "Recurring bill", status: "Active" },
+    { name: "Electricity", amount: 40.0, cadence: "Recurring bill", status: "Active" },
+    { name: "Loan 1", amount: 193.71, cadence: "Recurring bill", status: "Active" },
+    { name: "Loan 2", amount: 265.64, cadence: "Recurring bill", status: "Active" },
+    { name: "Wifi", amount: 45.0, cadence: "Recurring bill", status: "Active" },
+    { name: "Phone", amount: 60.0, cadence: "Recurring bill", status: "Active" },
+    { name: "Bus Pass", amount: 89.0, cadence: "Recurring bill", status: "Active" },
+    { name: "Renter Insurance", amount: 9.25, cadence: "Recurring bill", status: "Active" },
+    { name: "Bus Pass 2", amount: 0, cadence: "Recurring bill", status: "Not set" },
+    { name: "Macbook", amount: 0, cadence: "Recurring bill", status: "Not set" }
   ],
   recurringTotals: [
     212.35, 204.35, 694.35, 213.35, 2138.35,
@@ -87,7 +87,7 @@ function renderOverview() {
 
   document.getElementById("savings-progress").style.width = `${financialSnapshot.savingsGoalRatio * 100}%`;
   document.getElementById("upcoming-bills").textContent = currencyPrecise.format(
-    financialSnapshot.recurringTotals[financialSnapshot.recurringTotals.length - 1]
+    financialSnapshot.recurringBills.reduce((sum, bill) => sum + bill.amount, 0)
   );
   document.documentElement.style.setProperty(
     "--ring-angle",
@@ -99,6 +99,7 @@ function renderUpcomingBills() {
   const list = document.getElementById("upcoming-list");
 
   financialSnapshot.upcomingBills.forEach((bill) => {
+    const matchingBill = financialSnapshot.recurringBills.find((item) => item.name === bill.name);
     const item = document.createElement("div");
     item.className = "bill-item";
     item.innerHTML = `
@@ -107,7 +108,7 @@ function renderUpcomingBills() {
           <strong>${bill.name}</strong>
           <span class="muted">Due ${bill.due}</span>
         </div>
-        <strong>Tracked</strong>
+        <strong>${matchingBill ? currencyPrecise.format(matchingBill.amount) : "Tracked"}</strong>
       </div>
     `;
     list.appendChild(item);
@@ -138,7 +139,7 @@ function renderBudgets() {
 function renderSubscriptions() {
   const list = document.getElementById("subscription-list");
   const detailedList = document.getElementById("subscriptions-detailed-list");
-  const totalMonthly = financialSnapshot.recurringTotals[financialSnapshot.recurringTotals.length - 1];
+  const totalMonthly = financialSnapshot.recurringBills.reduce((sum, bill) => sum + bill.amount, 0);
 
   financialSnapshot.recurringBills.forEach((subscription) => {
     const row = document.createElement("div");
@@ -149,7 +150,7 @@ function renderSubscriptions() {
         <span class="muted">${subscription.cadence}</span>
       </div>
       <div class="subscription-meta" style="text-align: right">
-        <strong>Amount in sheet</strong>
+        <strong>${currencyPrecise.format(subscription.amount)}</strong>
         <span class="pill">${subscription.status}</span>
       </div>
     `;
