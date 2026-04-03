@@ -128,7 +128,8 @@ function setupAuth() {
 }
 
 function renderOverview() {
-  setText("cash-balance", currency.format(financialSnapshot.cashBalance));
+  const linkedBalance = financialSnapshot.accounts.reduce((sum, account) => sum + account.balance, 0);
+  setText("cash-balance", currency.format(linkedBalance));
   setText("balance-change", `+${financialSnapshot.balanceChange}%`);
   setText("monthly-spend", currencyPrecise.format(financialSnapshot.monthlySpend));
   setText(
