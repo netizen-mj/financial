@@ -34,6 +34,23 @@ button {
   font: inherit;
 }
 
+.app-shell {
+  min-height: 100vh;
+  padding: 18px;
+}
+
+.app-frame {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  max-width: 1280px;
+  margin: 0 auto;
+  border-radius: 36px;
+  overflow: hidden;
+  border: 1px solid rgba(20, 49, 43, 0.08);
+  background: rgba(255, 248, 240, 0.7);
+  box-shadow: 0 36px 120px rgba(19, 49, 43, 0.16);
+}
+
 .page-shell {
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
@@ -192,6 +209,27 @@ button {
   padding: 28px;
 }
 
+.mobile-topbar,
+.mobile-tabbar {
+  display: none;
+}
+
+.mobile-title {
+  margin: 4px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.avatar-chip {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 16px 36px rgba(13, 139, 111, 0.22);
+}
+
 .view {
   display: none;
 }
@@ -324,7 +362,9 @@ button {
 .bill-stack,
 .budget-list,
 .subscription-list,
-.transaction-list {
+.transaction-list,
+.account-list,
+.connect-grid {
   display: grid;
   gap: 14px;
 }
@@ -332,7 +372,8 @@ button {
 .bill-item,
 .budget-row,
 .subscription-row,
-.transaction-row {
+.transaction-row,
+.account-row {
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -385,6 +426,30 @@ button {
   background: rgba(20, 49, 43, 0.06);
   color: var(--muted);
   font-size: 0.8rem;
+}
+
+.connect-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.institution-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.institution-card strong,
+.account-row strong {
+  display: block;
+}
+
+.account-balance {
+  font-weight: 800;
+}
+
+.account-balance.negative {
+  color: var(--danger);
 }
 
 .goal-ring {
@@ -458,14 +523,73 @@ button {
   }
 }
 
-@media (max-width: 720px) {
-  .sidebar,
-  .dashboard {
-    padding: 18px;
+@media (max-width: 900px) {
+  .app-shell {
+    padding: 0;
   }
 
-  .hero h2 {
+  .app-frame {
+    max-width: 430px;
+    min-height: 100vh;
+    display: block;
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .page-shell {
+    display: block;
+    min-height: auto;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .dashboard {
+    padding: 18px 18px 96px;
+  }
+
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .mobile-tabbar {
+    position: sticky;
+    bottom: 0;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 12px 14px 18px;
+    background: linear-gradient(180deg, rgba(244, 239, 231, 0.6), rgba(244, 239, 231, 0.98));
+    backdrop-filter: blur(18px);
+    border-top: 1px solid var(--line);
+  }
+
+  .mobile-tab {
+    border: 0;
+    border-radius: 16px;
+    padding: 10px 6px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .mobile-tab.active {
+    background: var(--surface-strong);
+    color: var(--brand-deep);
+    box-shadow: inset 0 0 0 1px rgba(13, 139, 111, 0.14);
+  }
+
+  .hero h2,
+  .view-hero h2 {
     max-width: none;
+    font-size: clamp(1.9rem, 8vw, 2.4rem);
   }
 
   .hero-actions {
@@ -475,6 +599,10 @@ button {
 
   .primary-button,
   .secondary-button {
-    flex: 1 1 180px;
+    flex: 1 1 160px;
+  }
+
+  .connect-grid {
+    grid-template-columns: 1fr;
   }
 }

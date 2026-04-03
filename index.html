@@ -13,42 +13,52 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="page-shell">
-      <aside class="sidebar">
-        <div class="brand-block">
-          <div class="brand-mark">N</div>
-          <div>
-            <p class="eyebrow">Personal finance</p>
-            <h1>Northstar</h1>
+    <div class="app-shell">
+      <div class="app-frame">
+        <aside class="sidebar">
+          <div class="brand-block">
+            <div class="brand-mark">N</div>
+            <div>
+              <p class="eyebrow">Personal finance</p>
+              <h1>Northstar</h1>
+            </div>
           </div>
-        </div>
 
-        <nav class="nav-list">
-          <button class="nav-item active" type="button" data-view="overview">Overview</button>
-          <button class="nav-item" type="button" data-view="subscriptions">Subscriptions</button>
-          <button class="nav-item" type="button" data-view="budgets">Budgets</button>
-          <button class="nav-item" type="button" data-view="transactions">Transactions</button>
-          <button class="nav-item" type="button" data-view="goals">Goals</button>
-        </nav>
+          <nav class="nav-list">
+            <button class="nav-item active" type="button" data-view="overview">Overview</button>
+            <button class="nav-item" type="button" data-view="subscriptions">Subscriptions</button>
+            <button class="nav-item" type="button" data-view="budgets">Budgets</button>
+            <button class="nav-item" type="button" data-view="transactions">Transactions</button>
+            <button class="nav-item" type="button" data-view="goals">Goals</button>
+            <button class="nav-item" type="button" data-view="accounts">Accounts</button>
+          </nav>
 
-        <section class="sidebar-card">
-          <p class="card-label">This month</p>
-          <h2 id="saved-total">$0</h2>
-          <p class="muted">Auto-detected savings from reduced recurring bills.</p>
-          <div class="meter">
-            <span id="savings-progress"></span>
-          </div>
-        </section>
+          <section class="sidebar-card">
+            <p class="card-label">This month</p>
+            <h2 id="saved-total">$0</h2>
+            <p class="muted">Auto-detected savings from reduced recurring bills.</p>
+            <div class="meter">
+              <span id="savings-progress"></span>
+            </div>
+          </section>
 
-        <section class="sidebar-card highlight">
-          <p class="card-label">Next move</p>
-          <h3>Trim recurring spend</h3>
-          <p class="muted">Three subscriptions are underused and worth reviewing this week.</p>
-          <button class="ghost-button" type="button" data-view-link="subscriptions">Review subscriptions</button>
-        </section>
-      </aside>
+          <section class="sidebar-card highlight">
+            <p class="card-label">Next move</p>
+            <h3>Trim recurring spend</h3>
+            <p class="muted">Three subscriptions are underused and worth reviewing this week.</p>
+            <button class="ghost-button" type="button" data-view-link="subscriptions">Review subscriptions</button>
+          </section>
+        </aside>
 
-      <main class="dashboard">
+        <main class="dashboard">
+          <header class="mobile-topbar">
+            <div>
+              <p class="eyebrow">Northstar Money</p>
+              <h1 class="mobile-title">Your finances</h1>
+            </div>
+            <button class="avatar-chip" type="button">MJ</button>
+          </header>
+
         <section class="view active" data-view-panel="overview">
           <header class="hero">
             <div>
@@ -61,7 +71,7 @@
             </div>
             <div class="hero-actions">
               <button class="secondary-button" type="button">Export report</button>
-              <button class="primary-button" type="button">Connect account</button>
+              <button class="primary-button" type="button" data-view-link="accounts">Connect account</button>
             </div>
           </header>
 
@@ -270,7 +280,49 @@
             </article>
           </section>
         </section>
-      </main>
+
+        <section class="view" data-view-panel="accounts">
+          <header class="view-hero">
+            <div>
+              <p class="eyebrow">Linked institutions</p>
+              <h2>Connect every account in one place.</h2>
+              <p class="hero-copy">This is still a demo flow, but it now behaves like a real accounts screen with supported institutions and linked balances.</p>
+            </div>
+            <span class="section-tag" id="accounts-total-tag">$0 linked</span>
+          </header>
+          <section class="single-column-grid">
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Quick connect</p>
+                  <h3>Popular institutions</h3>
+                </div>
+                <span class="section-tag neutral">Demo mode</span>
+              </div>
+              <div class="connect-grid" id="institution-list"></div>
+            </article>
+            <article class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="card-label">Connected accounts</p>
+                  <h3>Your linked balances</h3>
+                </div>
+                <button class="text-button" type="button" data-view-link="overview">Back to overview</button>
+              </div>
+              <div class="account-list" id="account-list"></div>
+            </article>
+          </section>
+        </section>
+        </main>
+
+        <nav class="mobile-tabbar">
+          <button class="mobile-tab active" type="button" data-view="overview">Home</button>
+          <button class="mobile-tab" type="button" data-view="subscriptions">Subs</button>
+          <button class="mobile-tab" type="button" data-view="transactions">Activity</button>
+          <button class="mobile-tab" type="button" data-view="goals">Goals</button>
+          <button class="mobile-tab" type="button" data-view="accounts">Accounts</button>
+        </nav>
+      </div>
     </div>
 
     <script src="./app.js"></script>

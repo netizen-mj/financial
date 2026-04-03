@@ -30,6 +30,18 @@ const financialSnapshot = {
     { merchant: "Uber", category: "Transport", date: "Yesterday", amount: -18.45 },
     { merchant: "Netflix", category: "Subscription", date: "Mar 30", amount: -22.99 },
     { merchant: "Sweetgreen", category: "Dining", date: "Mar 29", amount: -16.8 }
+  ],
+  accounts: [
+    { institution: "Chase", account: "Total Checking", type: "Checking", balance: 8420 },
+    { institution: "Ally", account: "High Yield Savings", type: "Savings", balance: 16420 },
+    { institution: "Amex", account: "Gold Card", type: "Credit", balance: -1294 },
+    { institution: "Fidelity", account: "Brokerage", type: "Investment", balance: 11294 }
+  ],
+  institutions: [
+    { name: "Chase", note: "Checking, savings, cards" },
+    { name: "Bank of America", note: "Checking and credit" },
+    { name: "Wells Fargo", note: "Banking and loans" },
+    { name: "Capital One", note: "Cards and checking" }
   ]
 };
 
@@ -198,14 +210,55 @@ function renderGoals() {
   document.getElementById("goal-savings-progress").style.width = `${financialSnapshot.savingsGoalRatio * 100}%`;
 }
 
+function renderAccounts() {
+  const institutionList = document.getElementById("institution-list");
+  const accountList = document.getElementById("account-list");
+  const totalLinked = financialSnapshot.accounts.reduce((sum, account) => sum + account.balance, 0);
+
+  financialSnapshot.institutions.forEach((institution) => {
+    const card = document.createElement("div");
+    card.className = "institution-card";
+    card.innerHTML = `
+      <p class="card-label">Supported</p>
+      <strong>${institution.name}</strong>
+      <p class="muted">${institution.note}</p>
+      <button class="ghost-button" type="button">Connect demo</button>
+    `;
+    institutionList.appendChild(card);
+  });
+
+  financialSnapshot.accounts.forEach((account) => {
+    const amountClass = account.balance < 0 ? "negative" : "";
+    const row = document.createElement("div");
+    row.className = "account-row";
+    row.innerHTML = `
+      <div class="transaction-row">
+        <div class="transaction-meta">
+          <strong>${account.institution}</strong>
+          <span class="muted">${account.account} • ${account.type}</span>
+        </div>
+        <span class="account-balance ${amountClass}">${currency.format(account.balance)}</span>
+      </div>
+    `;
+    accountList.appendChild(row);
+  });
+
+  setText("accounts-total-tag", `${currency.format(totalLinked)} linked`);
+}
+
 function setupNavigation() {
   const navItems = Array.from(document.querySelectorAll(".nav-item"));
+  const mobileTabs = Array.from(document.querySelectorAll(".mobile-tab"));
   const linkButtons = Array.from(document.querySelectorAll("[data-view-link]"));
   const views = Array.from(document.querySelectorAll("[data-view-panel]"));
-  const allButtons = [...navItems, ...linkButtons];
+  const allButtons = [...navItems, ...mobileTabs, ...linkButtons];
 
   function activate(viewId) {
     navItems.forEach((button) => {
+      button.classList.toggle("active", button.dataset.view === viewId);
+    });
+
+    mobileTabs.forEach((button) => {
       button.classList.toggle("active", button.dataset.view === viewId);
     });
 
@@ -229,4 +282,5 @@ renderSubscriptions();
 renderTransactions();
 renderBudgetDetails();
 renderGoals();
+renderAccounts();
 setupNavigation();
